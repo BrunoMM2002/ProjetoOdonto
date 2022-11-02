@@ -5,33 +5,33 @@
         $password = "";
         $dbname = "contato";
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        $conexaodb = new mysqli($servername, $username, $password, $dbname);
 
-        if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
+        if ($conexaodb->connect_error) {
+                die("Connection failed: " . $conexaodb->connect_error);
         }
 
-        // Variaveis que vem do frontend
-        $nome = strval($_GET['nome']);
-        $email = strval($_GET['email']);
-        $telefone = strval($_GET['telefone']);
-        $mensagem = strval($_GET['mensagem']);
+         // Variaveis que vem do frontend
+         $nome = strval($_GET['nome']);
+         $email = strval($_GET['email']);
+         $telefone = strval($_GET['telefone']);
+         $mensagem = strval($_GET['mensagem']);
 
         $sql = "SELECT * FROM contato WHERE email = '$email'";
 
-        $result = $conn->query($sql);
+        $result = $conexaodb->query($sql);
 
         if($result->num_rows > 0){
                 echo "Email já registrado";
         } else {
                 $sql = "INSERT INTO contato (nome, telefone, email, mensagem) VALUES ('$nome', '$telefone', '$email', '$mensagem')";
 
-                if ($conn->query($sql) === TRUE) {
+                if ($conexaodb->query($sql) === TRUE) {
                         echo "Cadastrado com sucesso";
                 } else {
-                        echo "Error: " . $sql . "<br>" . $conn->error;
+                        echo "Error: " . $sql . "<br>" . $conexaodb->error;
                 }
         }
 
-        $conn->close();
+        $conexaodb->close();
 ?>
